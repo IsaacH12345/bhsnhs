@@ -2,7 +2,6 @@
 import React from 'react';
 import Button from '../components/Button';
 import InfoBox from '../components/InfoBox';
-// ImagePlaceholder import removed
 import useSplashText from '../hooks/useSplashText';
 import { NAVIGATION_LINKS, MOCK_STATISTICS, MOCK_UPCOMING_DATES } from '../constants';
 import { StatisticItem, DateItem } from '../types';
@@ -20,17 +19,27 @@ const HomePage: React.FC<HomePageProps> = ({ onAdminAreaClick }) => {
       <main className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         {/* Left Column */}
         <div className="md:col-span-2 flex flex-col space-y-6">
-          <header className="text-center">
-            <div className="mb-2"> {/* Simplified container for title */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-wider">
-                BHS' NHS WEBSITE
-              </h1>
+          <header className="text-center py-4">
+            <div className="flex justify-center items-center space-x-3 sm:space-x-4 mb-2">
+              <img 
+                src="/image_creature.png" 
+                alt="Creature icon" 
+                className="h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 object-contain" 
+              />
+              <div>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-wider leading-tight">
+                  BHS' NHS<br />WEBSITE
+                </h1>
+              </div>
+              <img 
+                src="/image_giraffe.png" 
+                alt="Giraffe icon" 
+                className="h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 object-contain" 
+              />
             </div>
-            <p className="text-lg text-indigo-300">{splashText}</p>
+            <p className="text-base sm:text-lg text-indigo-300">{splashText}</p>
           </header>
           
-          {/* Removed Image Placeholders section */}
-
           <nav className="flex flex-col space-y-3">
             {mainNavLinks.map((link) => (
               <Button key={link.id} to={link.path}>
@@ -41,7 +50,7 @@ const HomePage: React.FC<HomePageProps> = ({ onAdminAreaClick }) => {
         </div>
 
         {/* Right Column */}
-        <div className="md:col-span-1 flex flex-col space-y-6 h-[calc(100vh-8rem)] md:h-auto">
+        <div className="md:col-span-1 flex flex-col space-y-6 h-[calc(100vh-8rem)] md:h-auto"> {/* Adjusted height for consistency with previous versions if needed */}
           <div className="flex-1 min-h-[200px] md:min-h-0 md:h-1/2">
             <InfoBox title="Statistics">
               <ul className="space-y-2">
