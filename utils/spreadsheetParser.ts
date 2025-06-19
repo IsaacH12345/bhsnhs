@@ -373,35 +373,17 @@ export const parseSpreadsheetData = async (arrayBuffer: ArrayBuffer): Promise<De
       if (!finalParsedData.sem1StartDate) {
         console.error("Semester 1 Start Date is not available; cannot process additional hours accurately.");
       } else {
-        for (let i = 2; i < additionalHoursAOA.length; i++) {
+        // Member names start from Excel Row 5 (index 4 in additionalHoursAOA)
+        for (let i = 4; i < additionalHoursAOA.length; i++) {
           const row = additionalHoursAOA[i];
           const memberName = row[0]?.toString().trim();
           if (!memberName) continue;
 
-          const additionalDateRaw = row[1];
-          const notes = row[3]?.toString().trim() || '';
-
-          const hoursRaw = row[2]?.toString().trim();
-          let additionalHours = 0;
-          if (hoursRaw && hoursRaw !== "") {
-            const parsedNum = parseFloat(hoursRaw);
-            if (!isNaN(parsedNum)) {
-              additionalHours = parsedNum;
-            } else {
-              console.warn(`Invalid hour value '${hoursRaw}' for member '${memberName}' on date '${additionalDateRaw ? formatDateStandard(parseExcelDate(additionalDateRaw)) : 'unknown date'}'. Treating as 0 additional hours.`);
-            }
-          }
-
-          if (!additionalDateRaw) {
-            console.warn(`Missing date for member '${memberName}' in 'AdditionalHours' sheet (Row ${i + 1}). Skipping entry.`);
-            continue;
-          }
-          if (additionalHours <= 0) {
-            continue;
-          }
-
           let memberToUpdate = finalParsedData.members!.find(m => m.memberName === memberName);
           if (!memberToUpdate) {
+            // If member not found in HourTracker, create a new entry.
+            // This case might imply data inconsistency or members only having additional hours.
+            console.warn(`Member "${memberName}" from "AdditionalHours" sheet not found in "HourTracker" sheet. Creating new entry.`);
             memberToUpdate = {
               memberName,
               semester1Hours: 0,
@@ -413,31 +395,61 @@ export const parseSpreadsheetData = async (arrayBuffer: ArrayBuffer): Promise<De
             finalParsedData.members!.push(memberToUpdate);
           }
 
-          const additionalJsDate = parseExcelDate(additionalDateRaw);
-          if (additionalJsDate && finalParsedData.sem1StartDate) {
-            let semester: 1 | 2;
-            if (finalParsedData.sem2StartDate && additionalJsDate >= finalParsedData.sem2StartDate) {
-              semester = 2;
-              if (finalParsedData.sem2EndDate && additionalJsDate >= finalParsedData.sem2EndDate) {
-                continue;
-              }
-              memberToUpdate.semester2Hours += additionalHours;
-            } else if (additionalJsDate >= finalParsedData.sem1StartDate) {
-              semester = 1;
-              memberToUpdate.semester1Hours += additionalHours;
-            } else {
-              continue;
+          // Iterate through sets of (Date, Hours, Notes) columns horizontally
+          for (let colOffset = 0; (1 + colOffset) < row.length; colOffset += 3) {
+            const dateColIndex = 1 + colOffset;
+            const hoursColIndex = 2 + colOffset;
+            const notesColIndex = 3 + colOffset;
+
+            const additionalDateRaw = row[dateColIndex];
+            if (!additionalDateRaw || String(additionalDateRaw).trim() === "") {
+              // No date in this set, so assume no more entries for this member in this row
+              break; 
             }
 
-            memberToUpdate.totalHours += additionalHours;
-            memberToUpdate.additionalHourDetails.push({
-              date: formatDateStandard(additionalJsDate),
-              hours: additionalHours,
-              notes: notes,
-              semester: semester
-            });
-          } else {
-              console.warn(`Invalid date value '${additionalDateRaw}' or missing Sem 1 start date for member '${memberName}' in 'AdditionalHours' sheet (Row ${i + 1}). Skipping THIS additional hour entry.`);
+            const hoursRaw = (hoursColIndex < row.length) ? row[hoursColIndex]?.toString().trim() : "";
+            const notes = (notesColIndex < row.length) ? row[notesColIndex]?.toString().trim() : '';
+            
+            let additionalHours = 0;
+            if (hoursRaw && hoursRaw !== "") {
+              const parsedNum = parseFloat(hoursRaw);
+              if (!isNaN(parsedNum)) {
+                additionalHours = parsedNum;
+              } else {
+                console.warn(`Invalid hour value '${hoursRaw}' for member '${memberName}' on date '${formatDateStandard(parseExcelDate(additionalDateRaw)) || 'unknown date'}'. Treating as 0 additional hours.`);
+              }
+            }
+
+            if (additionalHours <= 0) {
+              continue; // Skip if no hours
+            }
+
+            const additionalJsDate = parseExcelDate(additionalDateRaw);
+            if (additionalJsDate && finalParsedData.sem1StartDate) {
+              let semester: 1 | 2;
+              if (finalParsedData.sem2StartDate && additionalJsDate >= finalParsedData.sem2StartDate) {
+                semester = 2;
+                if (finalParsedData.sem2EndDate && additionalJsDate >= finalParsedData.sem2EndDate) {
+                  continue; // Entry is after S2 ends
+                }
+                memberToUpdate.semester2Hours += additionalHours;
+              } else if (additionalJsDate >= finalParsedData.sem1StartDate) {
+                semester = 1;
+                memberToUpdate.semester1Hours += additionalHours;
+              } else {
+                continue; // Entry is before S1 starts
+              }
+
+              memberToUpdate.totalHours += additionalHours;
+              memberToUpdate.additionalHourDetails.push({
+                date: formatDateStandard(additionalJsDate),
+                hours: additionalHours,
+                notes: notes,
+                semester: semester
+              });
+            } else {
+                console.warn(`Invalid date value '${additionalDateRaw}' or missing Sem 1 start date for member '${memberName}' in 'AdditionalHours' sheet (Row ${i + 1}, Date Col ${dateColIndex +1}). Skipping this additional hour entry.`);
+            }
           }
         }
       }
