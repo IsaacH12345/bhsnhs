@@ -5,5 +5,6 @@ export const SPLASH_TEXTS: string[] = [
   "-- Wednesday Addams --",
   "-- Garfield --",
   "-- Anyone else play Roblox? --",
-  "-- 3.141592653589 --"
+  "-- 3.141592653589 --",
+  "-- 1984 by George Orwell --",
 ];

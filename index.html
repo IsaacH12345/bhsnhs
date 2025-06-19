@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,25 +9,10 @@
   <style>
     body {
       font-family: 'Roboto Mono', monospace;
-      background-color: #121212; /* Consistent dark background */
-      color: #E0E0E0;
+      background-color: var(--background-primary); 
+      color: var(--text-primary);
     }
-    /* Custom scrollbar for webkit browsers */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #2A2640; /* Darker track */
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #4A4466; /* Lighter thumb */
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #5A5476; /* Hover color */
-    }
+    /* Scrollbar styles will be injected by App.tsx */
   </style>
 <script type="importmap">
 {
@@ -40,11 +24,11 @@
   }
 }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-[#121212] text-[#E0E0E0]">
+<body class="bg-[var(--background-primary)] text-[var(--text-primary)]">
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>
-    
