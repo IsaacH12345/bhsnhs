@@ -1,15 +1,20 @@
-import { useState, useEffect } from 'react';
-import { SPLASH_TEXTS } from '../data/splashTexts'; // Updated import path
 
-const useSplashText = (): string => {
+import { useState, useEffect } from 'react';
+import { DetailedHoursData } from '../types';
+
+const useSplashText = (uploadedHoursData: DetailedHoursData | null): string => {
   const [splashText, setSplashText] = useState<string>('');
 
   useEffect(() => {
-    if (SPLASH_TEXTS.length > 0) {
-      const randomIndex = Math.floor(Math.random() * SPLASH_TEXTS.length);
-      setSplashText(SPLASH_TEXTS[randomIndex]);
+    const textsToUse = uploadedHoursData?.splashTexts;
+
+    if (textsToUse && textsToUse.length > 0) {
+      const randomIndex = Math.floor(Math.random() * textsToUse.length);
+      setSplashText(textsToUse[randomIndex]);
+    } else {
+      setSplashText("-- NHS --"); // Default if no texts from Excel or data not loaded
     }
-  }, []);
+  }, [uploadedHoursData]); // Rerun if uploadedHoursData (and thus splashTexts) changes
 
   return splashText;
 };

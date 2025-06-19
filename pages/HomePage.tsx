@@ -40,6 +40,7 @@ interface HomePageProps {
 //         - Cols H,I,J: Info/Update Date, Update Header, Update Content.
 //         - Cols L,M: Changelog Date, Changelog Description.
 //         - Cols O,P: Suggestions Text (O8), Suggestions Button URL (P8).
+//       - Col R (Excel Row 2 onwards, Data Array Index 1 onwards): Splash Texts for homepage. (NEW)
 //
 //    Sheet 4: "Officers" (Details for NHS Officers)
 //       - Data STARTS from Excel Row 3 (Data Array Index 2).
@@ -120,7 +121,7 @@ const getCurrentSemester = (now: Date, sem1Start: Date | null, sem2Start: Date |
 
 
 const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
-  const splashText = useSplashText();
+  const splashText = useSplashText(uploadedHoursData);
 
   const [creatureSrc, setCreatureSrc] = useState<string>(TRANSPARENT_PIXEL);
   const [giraffeSrc, setGiraffeSrc] = useState<string>(TRANSPARENT_PIXEL);

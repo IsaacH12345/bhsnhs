@@ -157,6 +157,7 @@ export interface DetailedHoursData {
 
   suggestionsText: string | null; // From Information O8
   suggestionsButtonUrl: string | null; // From Information P8
+  splashTexts: string[] | null; // From Information R2 downwards - NEW
 
   studyResources: StudyResource[] | null; // From "StudyResources" sheet (Sheet 7)
   availableGeneralTags: GeneralTag[] | null; // List of all possible general tags from "StudyResources" sheet Row 1

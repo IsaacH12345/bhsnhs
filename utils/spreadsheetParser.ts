@@ -148,6 +148,7 @@ export const parseSpreadsheetData = async (arrayBuffer: ArrayBuffer): Promise<De
     let changelogUpdates: DynamicListItem[] = [];
     let suggestionsText: string | null = null;
     let suggestionsButtonUrl: string | null = null;
+    let parsedSplashTexts: string[] = [];
 
     if (workbook.SheetNames.length < 3) {
       console.warn("Third sheet 'Information' not found. Metadata and dynamic content will be unavailable. Ensure NHSExcel.xlsx has at least 3 sheets in the correct order.");
@@ -175,6 +176,21 @@ export const parseSpreadsheetData = async (arrayBuffer: ArrayBuffer): Promise<De
       if (!sem1StartDate) {
           console.error("CRITICAL: Semester 1 Start Date (Cell B3 on 'Information' sheet) is missing or invalid. Hour calculations will be affected.");
       }
+
+      // Parse Splash Texts from Column R (index 17), starting from Row 2 (index 1 in infoAOA)
+      if (infoAOA.length > 1) {
+        for (let i = 1; i < infoAOA.length; i++) { // Start from Excel row 2 (infoAOA index 1)
+          const splashTextCell = infoAOA[i]?.[17]; // Column R
+          if (splashTextCell) {
+            const textValue = String(splashTextCell).trim();
+            if (textValue) {
+              parsedSplashTexts.push(textValue);
+            }
+          }
+        }
+      }
+      finalParsedData.splashTexts = parsedSplashTexts.length > 0 ? parsedSplashTexts : null;
+
 
       if (infoAOA.length > 7) {
         const row8Data = infoAOA[7];
