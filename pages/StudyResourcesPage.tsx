@@ -187,33 +187,37 @@ const StudyResourcesPage: React.FC<StudyResourcesPageProps> = ({ pageTitle, uplo
         resource.description.toLowerCase().includes(lowerSearchTerm)
       );
     }
-
-    // Subject filter
-    if (activeSubjectFilters.size > 0) {
-      resources = resources.filter(resource => 
-        resource.subjectId && activeSubjectFilters.has(resource.subjectId)
-      );
-    }
-
-    // Course filter (only apply if the parent subject is active)
-    if (Object.keys(activeCourseFilters).length > 0) {
-      resources = resources.filter(resource => {
-        if (!resource.subjectId || !activeCourseFilters[resource.subjectId] || !activeSubjectFilters.has(resource.subjectId)) {
-          // If subject not active or no course filters for this resource's subject, pass if subject filter alone passed.
-          // If no subjectId, it can't be filtered by course.
-          return true; 
-        }
-        const coursesForSubject = activeCourseFilters[resource.subjectId];
-        if (coursesForSubject.has(`ALL_${resource.subjectId}`)) return true; // "All courses" for this subject selected
-        return resource.courseName && coursesForSubject.has(resource.courseName);
-      });
-    }
     
     // General tag filter
     if (activeGeneralTagFilters.size > 0) {
       resources = resources.filter(resource =>
         resource.generalTags.some(tag => activeGeneralTagFilters.has(tag.id))
       );
+    }
+    
+    // Combined Subject and Course Filter
+    const anySubjectOrCourseFilterActive = activeSubjectFilters.size > 0;
+    if (anySubjectOrCourseFilterActive) {
+      resources = resources.filter(resource => {
+        // A resource is a match if it satisfies AT LEAST ONE of the active subject filters.
+        return Array.from(activeSubjectFilters).some(subjectId => {
+          // Rule 1: Resource must have the subject.
+          const hasSubject = resource.matchedSubjects.some(s => s.id === subjectId);
+          if (!hasSubject) return false;
+    
+          // Rule 2: Check course constraints for this subject.
+          const courseFilterForSubject = activeCourseFilters[subjectId];
+          if (!courseFilterForSubject || courseFilterForSubject.size === 0 || courseFilterForSubject.has(`ALL_${subjectId}`)) {
+            // No course constraint or "All" selected, so subject match is enough.
+            return true;
+          }
+    
+          // Rule 3: Check for specific course match.
+          return resource.matchedCourses.some(course =>
+            course.subjectId === subjectId && courseFilterForSubject.has(course.name)
+          );
+        });
+      });
     }
 
     return resources;

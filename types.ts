@@ -107,18 +107,26 @@ export interface GeneralTag {
   name: string; // e.g., "Worksheet", "Video Lecture"
 }
 
+export interface ResourceSubject {
+  id: string; // subjectId
+  name: string;
+  color: string;
+}
+
+export interface ResourceCourse {
+  name: string;
+  color: string;
+  subjectId: string;
+}
+
 export interface StudyResource {
   id: string;
   name: string;
   description: string;
-  subjectTag: string | null; // Raw subject name from Excel
-  subjectId: string | null; // Matched subject ID (e.g., 'math')
-  subjectColor: string | null; // Matched subject color
-  courseTag: string | null; // Raw course name from Excel
-  courseName: string | null; // Matched course name (from CourseDetail)
-  courseColor: string | null; // Matched course color
   downloadLink: string | null;
-  generalTags: GeneralTag[]; // Array of matched GeneralTag objects
+  generalTags: GeneralTag[];
+  matchedSubjects: ResourceSubject[];
+  matchedCourses: ResourceCourse[];
 }
 
 // For Meeting Information Page

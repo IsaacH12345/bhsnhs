@@ -1,5 +1,5 @@
 
-import { DetailedHoursData, MemberDetailedHours, DailyHourDetail, DynamicListItem, OfficerInfo, AdditionalHourEntry, MemberProficiencyInfo, SubjectDetails, CourseDetail, MemberProficiencyInSubject, StudyResource, GeneralTag, MeetingInfoItem } from '../types';
+import { DetailedHoursData, MemberDetailedHours, DailyHourDetail, DynamicListItem, OfficerInfo, AdditionalHourEntry, MemberProficiencyInfo, SubjectDetails, CourseDetail, MemberProficiencyInSubject, StudyResource, GeneralTag, MeetingInfoItem, ResourceSubject, ResourceCourse } from '../types';
 
 // Make XLSX globally available from CDN
 declare var XLSX: any;
@@ -693,32 +693,51 @@ export const parseSpreadsheetData = async (arrayBuffer: ArrayBuffer): Promise<De
           if (!resourceName) continue; // Skip if no resource name
 
           const description = row[2]?.toString().trim() || "No description provided."; // Col C
-          const subjectTagNameRaw = row[3]?.toString().trim(); // Col D
-          const courseTagNameRaw = row[4]?.toString().trim(); // Col E
+          const subjectTagNames = (row[3]?.toString() || '').split(',').map(t => t.trim()).filter(Boolean); // Col D
+          const courseTagNames = (row[4]?.toString() || '').split(',').map(t => t.trim()).filter(Boolean); // Col E
           const downloadLink = row[5]?.toString().trim() || null; // Col F
           const generalTagsString = row[6]?.toString().trim(); // Col G
 
-          let subjectId: string | null = null;
-          let subjectColor: string | null = null;
-          let matchedCourseName: string | null = null;
-          let matchedCourseColor: string | null = null;
+          const matchedSubjects: ResourceSubject[] = [];
+          const matchedCourses: ResourceCourse[] = [];
+          const addedSubjectIds = new Set<string>();
 
-          if (subjectTagNameRaw && finalParsedData.subjectsData) {
-            const matchedSubject = finalParsedData.subjectsData.find(s => s.name.toLowerCase() === subjectTagNameRaw.toLowerCase());
-            if (matchedSubject) {
-              subjectId = matchedSubject.id;
-              subjectColor = matchedSubject.color;
-              if (courseTagNameRaw) {
-                const matchedCourse = matchedSubject.courses.find(c => c.name.toLowerCase() === courseTagNameRaw.toLowerCase());
+          // Process explicit subject tags first
+          if (subjectTagNames.length > 0 && finalParsedData.subjectsData) {
+            for (const tagName of subjectTagNames) {
+              const matchedSubject = finalParsedData.subjectsData.find(s => s.name.toLowerCase() === tagName.toLowerCase());
+              if (matchedSubject && !addedSubjectIds.has(matchedSubject.id)) {
+                matchedSubjects.push({ id: matchedSubject.id, name: matchedSubject.name, color: matchedSubject.color });
+                addedSubjectIds.add(matchedSubject.id);
+              } else if (!matchedSubject) {
+                console.warn(`Study Resource "${resourceName}": Subject tag "${tagName}" not found.`);
+              }
+            }
+          }
+
+          // Process course tags and implicitly add their subjects
+          if (courseTagNames.length > 0 && finalParsedData.subjectsData) {
+            for (const courseName of courseTagNames) {
+              let courseFound = false;
+              for (const subject of finalParsedData.subjectsData) {
+                const matchedCourse = subject.courseNameMap.get(courseName.toLowerCase());
                 if (matchedCourse) {
-                  matchedCourseName = matchedCourse.name;
-                  matchedCourseColor = matchedCourse.color;
-                } else {
-                  console.warn(`Study Resource "${resourceName}": Course tag "${courseTagNameRaw}" not found in subject "${matchedSubject.name}".`);
+                  // Add the matched course
+                  matchedCourses.push({ name: matchedCourse.name, color: matchedCourse.color, subjectId: subject.id });
+                  
+                  // Add the course's subject if it wasn't already added explicitly
+                  if (!addedSubjectIds.has(subject.id)) {
+                    matchedSubjects.push({ id: subject.id, name: subject.name, color: subject.color });
+                    addedSubjectIds.add(subject.id);
+                  }
+                  
+                  courseFound = true;
+                  break; // Assume course names are unique across subjects, stop after first find.
                 }
               }
-            } else {
-              console.warn(`Study Resource "${resourceName}": Subject tag "${subjectTagNameRaw}" not found.`);
+              if (!courseFound) {
+                console.warn(`Study Resource "${resourceName}": Course tag "${courseName}" not found in any subject.`);
+              }
             }
           }
 
@@ -739,14 +758,10 @@ export const parseSpreadsheetData = async (arrayBuffer: ArrayBuffer): Promise<De
             id: `resource-${rowIdx}`,
             name: resourceName,
             description,
-            subjectTag: subjectTagNameRaw || null,
-            subjectId,
-            subjectColor,
-            courseTag: courseTagNameRaw || null,
-            courseName: matchedCourseName,
-            courseColor: matchedCourseColor,
             downloadLink,
             generalTags: resourceGeneralTags,
+            matchedSubjects,
+            matchedCourses,
           });
         }
       }

@@ -39,24 +39,26 @@ const StudyResourceCard: React.FC<StudyResourceCardProps> = ({ resource, isExpan
     <div className="bg-[var(--infoBoxBackground)] p-5 rounded-xl shadow-lg flex flex-col h-full">
       {/* Tags Display */}
       <div className="mb-2 flex flex-wrap gap-1 justify-center">
-        {resource.subjectTag && (
-          <span 
+        {resource.matchedSubjects.map(subject => (
+          <span
+            key={subject.id}
             className="px-2 py-0.5 text-xs font-medium rounded-full shadow-sm"
-            style={{ backgroundColor: resource.subjectColor || '#6B7280', color: getTextColorForTag(resource.subjectColor) }}
-            title={`Subject: ${resource.subjectTag}`}
+            style={{ backgroundColor: subject.color || '#6B7280', color: getTextColorForTag(subject.color) }}
+            title={`Subject: ${subject.name}`}
           >
-            S: {resource.subjectTag}
+            S: {subject.name}
           </span>
-        )}
-        {resource.courseName && (
-          <span 
+        ))}
+        {resource.matchedCourses.map(course => (
+          <span
+            key={course.name}
             className="px-2 py-0.5 text-xs font-medium rounded-full shadow-sm"
-            style={{ backgroundColor: resource.courseColor || '#4B5563', color: getTextColorForTag(resource.courseColor) }}
-            title={`Course: ${resource.courseName}`}
+            style={{ backgroundColor: course.color || '#4B5563', color: getTextColorForTag(course.color) }}
+            title={`Course: ${course.name}`}
           >
-            C: {resource.courseName}
+            C: {course.name}
           </span>
-        )}
+        ))}
         {resource.generalTags.map(tag => (
           <span 
             key={tag.id} 
