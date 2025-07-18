@@ -23,10 +23,10 @@ const SuggestionsPage: React.FC<SuggestionsPageProps> = ({ pageTitle, uploadedHo
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-6 sm:p-10 bg-[var(--background-primary)] text-[var(--text-primary)]">
+    <div className="min-h-screen flex flex-col items-center p-4 sm:p-6 md:p-10 bg-[var(--background-primary)] text-[var(--text-primary)]">
       <header className="mb-10 text-center w-full max-w-screen-xl">
-        <h1 className="text-5xl sm:text-6xl font-bold text-[var(--text-primary)]">{PAGE_MAIN_TITLE}</h1>
-        <p className="text-xl text-[var(--text-secondary)] mt-2">{pageTitle}</p>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--text-primary)]">{PAGE_MAIN_TITLE}</h1>
+        <p className="text-lg sm:text-xl text-[var(--text-secondary)] mt-2">{pageTitle}</p>
       </header>
 
       <main className="flex-grow w-full max-w-3xl flex flex-col items-center justify-center"> {/* Added justify-center */}
@@ -44,13 +44,13 @@ const SuggestionsPage: React.FC<SuggestionsPageProps> = ({ pageTitle, uploadedHo
         )}
 
         {!isLoading && !error && uploadedHoursData && (
-          <div className="bg-[var(--infoBoxBackground)] p-8 sm:p-10 rounded-xl shadow-2xl w-full">
+          <div className="bg-[var(--infoBoxBackground)] p-6 sm:p-8 md:p-10 rounded-xl shadow-2xl w-full">
             {suggestionsText ? (
-              <p className="text-xl text-center text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed mb-8">
+              <p className="text-lg sm:text-xl text-center text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed mb-8">
                 {suggestionsText}
               </p>
             ) : (
-              <p className="text-xl text-center text-[var(--text-tertiary)] mb-8">
+              <p className="text-lg sm:text-xl text-center text-[var(--text-tertiary)] mb-8">
                 No information available for suggestions at this time.
               </p>
             )}
@@ -59,7 +59,6 @@ const SuggestionsPage: React.FC<SuggestionsPageProps> = ({ pageTitle, uploadedHo
               <Button
                 onClick={handleProvideFeedbackClick}
                 disabled={!suggestionsButtonUrl}
-                className="!py-4 !px-10 !text-2xl !font-semibold rounded-xl"
               >
                 {suggestionsButtonUrl ? "Button to Google Form" : "Feedback Link Unavailable"}
               </Button>
@@ -74,7 +73,7 @@ const SuggestionsPage: React.FC<SuggestionsPageProps> = ({ pageTitle, uploadedHo
       </main>
       
       <footer className="mt-12">
-        <Button to="/" className="!py-3 !px-8 !text-xl !font-semibold rounded-lg">
+        <Button to="/" className="!py-2 !px-6 !text-lg rounded-lg">
           Back to Home
         </Button>
       </footer>

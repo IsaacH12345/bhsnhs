@@ -225,14 +225,14 @@ const StudyResourcesPage: React.FC<StudyResourcesPageProps> = ({ pageTitle, uplo
   const anyFilterActive = searchTerm || activeSubjectFilters.size > 0 || Object.keys(activeCourseFilters).some(key => activeCourseFilters[key]?.size > 0) || activeGeneralTagFilters.size > 0;
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-6 sm:p-10 bg-[var(--background-primary)] text-[var(--text-primary)]">
+    <div className="min-h-screen flex flex-col items-center p-4 sm:p-6 md:p-10 bg-[var(--background-primary)] text-[var(--text-primary)]">
       <header className="mb-8 text-center w-full max-w-screen-xl">
         <div className="flex justify-start mb-4">
-          <Button to="/" className="!py-2 !px-6 !text-lg !font-semibold rounded-lg">
+          <Button to="/" className="!py-2 !px-4 !text-base sm:!text-lg !font-semibold rounded-lg">
             &larr; Back to Home
           </Button>
         </div>
-        <h1 className="text-5xl sm:text-6xl font-bold text-[var(--text-primary)]">{PAGE_MAIN_TITLE}</h1>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--text-primary)]">{PAGE_MAIN_TITLE}</h1>
         {pageTitle !== PAGE_MAIN_TITLE && <p className="text-xl text-[var(--text-secondary)] mt-2">{pageTitle}</p>}
       </header>
 
@@ -240,10 +240,10 @@ const StudyResourcesPage: React.FC<StudyResourcesPageProps> = ({ pageTitle, uplo
         <div className="mb-6 w-full max-w-xl mx-auto">
           <input
             type="search"
-            placeholder="Search resources by name or description..."
+            placeholder="Search resources..."
             value={searchTerm}
             onChange={handleSearchChange}
-            className="w-full px-5 py-4 bg-[var(--adminModalInputBackground)] border border-[var(--adminModalInputBorder)] rounded-lg text-[var(--text-primary)] text-xl focus:ring-2 focus:ring-[var(--adminModalFocusRing)] focus:border-[var(--adminModalFocusRing)] outline-none transition-colors"
+            className="w-full px-4 py-3 sm:px-5 sm:py-4 bg-[var(--adminModalInputBackground)] border border-[var(--adminModalInputBorder)] rounded-lg text-[var(--text-primary)] text-lg sm:text-xl focus:ring-2 focus:ring-[var(--adminModalFocusRing)] focus:border-[var(--adminModalFocusRing)] outline-none transition-colors"
             aria-label="Search study resources"
           />
         </div>
@@ -290,7 +290,7 @@ const StudyResourcesPage: React.FC<StudyResourcesPageProps> = ({ pageTitle, uplo
                       <div 
                         ref={(el) => { courseDropdownRefs.current[subject.id] = el; }}
                         id={`courses-filter-${subject.id}`}
-                        className="absolute top-full left-0 mt-1 p-3 bg-[var(--contentPageBoxBackground)] border border-[var(--adminModalInputBorder)] rounded-md shadow-lg z-20 min-w-[360px] max-h-72 overflow-y-auto grid grid-cols-2 gap-x-2"
+                        className="absolute top-full left-0 mt-1 p-3 bg-[var(--contentPageBoxBackground)] border border-[var(--adminModalInputBorder)] rounded-md shadow-lg z-20 w-[90vw] max-w-md sm:min-w-[360px] max-h-72 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-x-2"
                       >
                         <button
                           onClick={() => toggleCourseFilter(subject.id, `ALL_${subject.id}`)}
@@ -352,9 +352,9 @@ const StudyResourcesPage: React.FC<StudyResourcesPageProps> = ({ pageTitle, uplo
                 {isGeneralTagDropdownOpen && (
                   <div 
                     ref={generalTagDropdownRef}
-                    className="absolute top-full left-0 mt-1 p-3 bg-[var(--contentPageBoxBackground)] border border-[var(--adminModalInputBorder)] rounded-md shadow-lg z-20 min-w-[360px] max-h-72 overflow-y-auto"
+                    className="absolute top-full left-0 mt-1 p-3 bg-[var(--contentPageBoxBackground)] border border-[var(--adminModalInputBorder)] rounded-md shadow-lg z-20 w-[90vw] max-w-md sm:min-w-[360px] max-h-72 overflow-y-auto"
                   >
-                    <div className="grid grid-cols-2 gap-x-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2">
                       {(showAllGeneralTagFiltersUI ? availableGeneralTagsData : availableGeneralTagsData.slice(0,10)).map(tag => (
                          <label key={tag.id} className="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-[var(--adminModalInputBackground)] cursor-pointer">
                             <input 
@@ -428,7 +428,7 @@ const StudyResourcesPage: React.FC<StudyResourcesPageProps> = ({ pageTitle, uplo
       </main>
       
       <footer className="mt-12">
-        <Button to="/" className="!py-3 !px-8 !text-xl !font-semibold rounded-lg">
+        <Button to="/" className="!py-2 !px-6 !text-lg rounded-lg">
           Back to Home
         </Button>
       </footer>

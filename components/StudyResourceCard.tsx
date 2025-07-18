@@ -69,7 +69,7 @@ const StudyResourceCard: React.FC<StudyResourceCardProps> = ({ resource, isExpan
       </div>
 
       {/* Resource Name (Title) */}
-      <h4 className="text-xl font-semibold mb-2 text-center text-[var(--text-accent-splash)] break-words">
+      <h4 className="text-lg sm:text-xl font-semibold mb-2 text-center text-[var(--text-accent-splash)] break-words">
         {resource.name}
       </h4>
       

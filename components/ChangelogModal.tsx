@@ -73,11 +73,10 @@ const ChangelogModal: React.FC<ChangelogModalProps> = ({ isOpen, onClose, update
     >
       <div 
         className="bg-[var(--infoBoxBackground)] p-6 sm:p-8 rounded-xl shadow-2xl max-w-lg w-full transform transition-all duration-300 ease-in-out scale-95 opacity-0 animate-modalFadeInScale flex flex-col"
-        onClick={(e) => e.stopPropagation()}
         style={{ maxHeight: '80vh' }} 
       >
         <div className="flex justify-between items-center mb-4">
-          <h3 id="changelogModalTitle" className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">Website Changelog</h3>
+          <h3 id="changelogModalTitle" className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)]">Website Changelog</h3>
           <button 
             onClick={onClose} 
             className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-2xl"
@@ -90,10 +89,10 @@ const ChangelogModal: React.FC<ChangelogModalProps> = ({ isOpen, onClose, update
         <div className="flex-grow overflow-y-auto mb-6 pr-2">
           {currentUpdate ? (
             <>
-              <p className="text-xl text-[var(--text-accent-info)] font-semibold mb-2">
+              <p className="text-lg sm:text-xl text-[var(--text-accent-info)] font-semibold mb-2">
                 {currentUpdate.date}
               </p>
-              <p className="text-lg text-[var(--text-secondary)] whitespace-pre-wrap break-words">
+              <p className="text-base sm:text-lg text-[var(--text-secondary)] whitespace-pre-wrap break-words">
                 {currentUpdate.content}
               </p>
             </>
@@ -108,18 +107,18 @@ const ChangelogModal: React.FC<ChangelogModalProps> = ({ isOpen, onClose, update
               <button 
                 onClick={prevUpdate} 
                 disabled={currentIndex === 0}
-                className="px-4 py-2 bg-[var(--button-primary-background)] text-[var(--buttonText)] rounded-lg disabled:opacity-50 hover:bg-[var(--button-primary-background-hover)] transition-colors text-md font-semibold"
+                className="px-4 py-2 bg-[var(--button-primary-background)] text-[var(--buttonText)] rounded-lg disabled:opacity-50 hover:bg-[var(--button-primary-background-hover)] transition-colors text-sm sm:text-md font-semibold"
                 aria-label="Previous changelog entry"
               >
                 Prev
               </button>
-              <span className="text-md text-[var(--text-tertiary)]">
+              <span className="text-sm sm:text-md text-[var(--text-tertiary)]">
                 {currentIndex + 1} / {updates.length}
               </span>
               <button 
                 onClick={nextUpdate} 
                 disabled={currentIndex === updates.length - 1}
-                className="px-4 py-2 bg-[var(--button-primary-background)] text-[var(--buttonText)] rounded-lg disabled:opacity-50 hover:bg-[var(--button-primary-background-hover)] transition-colors text-md font-semibold"
+                className="px-4 py-2 bg-[var(--button-primary-background)] text-[var(--buttonText)] rounded-lg disabled:opacity-50 hover:bg-[var(--button-primary-background-hover)] transition-colors text-sm sm:text-md font-semibold"
                 aria-label="Next changelog entry"
               >
                 Next
@@ -129,7 +128,7 @@ const ChangelogModal: React.FC<ChangelogModalProps> = ({ isOpen, onClose, update
           <div className="text-right">
             <button
                 onClick={onClose}
-                className="px-5 py-2 bg-[var(--button-primary-background)] text-[var(--buttonText)] rounded-lg hover:bg-[var(--button-primary-background-hover)] transition-colors text-lg font-semibold"
+                className="px-5 py-2 bg-[var(--button-primary-background)] text-[var(--buttonText)] rounded-lg hover:bg-[var(--button-primary-background-hover)] transition-colors text-base sm:text-lg font-semibold"
             >
                 Close
             </button>

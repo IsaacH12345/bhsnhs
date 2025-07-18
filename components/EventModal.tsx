@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 
 interface EventModalProps {
@@ -67,7 +68,7 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, eventName, des
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
       >
         <div className="flex justify-between items-center mb-4">
-          <h3 id="eventModalTitle" className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">{eventName}</h3>
+          <h3 id="eventModalTitle" className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)]">{eventName}</h3>
           <button 
             onClick={onClose} 
             className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-2xl"
@@ -77,12 +78,12 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, eventName, des
           </button>
         </div>
         <div className="max-h-60 overflow-y-auto pr-2 mb-6">
-            <p className="text-lg text-[var(--text-secondary)] whitespace-pre-wrap">{description}</p>
+            <p className="text-base sm:text-lg text-[var(--text-secondary)] whitespace-pre-wrap">{description}</p>
         </div>
         <div className="text-right">
             <button
                 onClick={onClose}
-                className="px-5 py-2 bg-[var(--button-primary-background)] text-[var(--buttonText)] rounded-lg hover:bg-[var(--button-primary-background-hover)] transition-colors text-lg font-semibold"
+                className="px-5 py-2 bg-[var(--button-primary-background)] text-[var(--buttonText)] rounded-lg hover:bg-[var(--button-primary-background-hover)] transition-colors text-base sm:text-lg font-semibold"
             >
                 Close
             </button>

@@ -65,14 +65,14 @@ const MeetingInfoPage: React.FC<MeetingInfoPageProps> = ({ pageTitle, uploadedHo
   const anyFilterActive = selectedTitleFilter || selectedDateFilter;
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-6 sm:p-10 bg-[var(--background-primary)] text-[var(--text-primary)]">
+    <div className="min-h-screen flex flex-col items-center p-4 sm:p-6 md:p-10 bg-[var(--background-primary)] text-[var(--text-primary)]">
       <header className="mb-8 text-center w-full max-w-screen-xl">
         <div className="flex justify-start w-full mb-4">
-          <Button to="/" className="!py-2 !px-6 !text-lg !font-semibold rounded-lg">
+          <Button to="/" className="!py-2 !px-4 !text-base sm:!text-lg !font-semibold rounded-lg">
             &larr; Back to Home
           </Button>
         </div>
-        <h1 className="text-5xl sm:text-6xl font-bold text-[var(--text-primary)]">{PAGE_MAIN_TITLE}</h1>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--text-primary)]">{PAGE_MAIN_TITLE}</h1>
         {pageTitle !== PAGE_MAIN_TITLE && <p className="text-xl text-[var(--text-secondary)] mt-2">{pageTitle}</p>}
       </header>
 
@@ -84,7 +84,7 @@ const MeetingInfoPage: React.FC<MeetingInfoPageProps> = ({ pageTitle, uploadedHo
               <select
                 value={selectedTitleFilter}
                 onChange={(e) => setSelectedTitleFilter(e.target.value)}
-                className="w-full sm:w-1/2 px-4 py-3 bg-[var(--adminModalInputBackground)] border border-[var(--adminModalInputBorder)] rounded-lg text-[var(--text-primary)] text-lg focus:ring-2 focus:ring-[var(--adminModalFocusRing)] outline-none"
+                className="w-full sm:w-1/2 px-4 py-3 bg-[var(--adminModalInputBackground)] border border-[var(--adminModalInputBorder)] rounded-lg text-[var(--text-primary)] text-base sm:text-lg focus:ring-2 focus:ring-[var(--adminModalFocusRing)] outline-none"
                 aria-label="Filter by meeting title"
               >
                 <option value="">Filter by Title...</option>
@@ -93,7 +93,7 @@ const MeetingInfoPage: React.FC<MeetingInfoPageProps> = ({ pageTitle, uploadedHo
               <select
                 value={selectedDateFilter}
                 onChange={(e) => setSelectedDateFilter(e.target.value)}
-                className="w-full sm:w-1/2 px-4 py-3 bg-[var(--adminModalInputBackground)] border border-[var(--adminModalInputBorder)] rounded-lg text-[var(--text-primary)] text-lg focus:ring-2 focus:ring-[var(--adminModalFocusRing)] outline-none"
+                className="w-full sm:w-1/2 px-4 py-3 bg-[var(--adminModalInputBackground)] border border-[var(--adminModalInputBorder)] rounded-lg text-[var(--text-primary)] text-base sm:text-lg focus:ring-2 focus:ring-[var(--adminModalFocusRing)] outline-none"
                 aria-label="Filter by meeting date"
               >
                 <option value="">Filter by Date...</option>
@@ -151,7 +151,7 @@ const MeetingInfoPage: React.FC<MeetingInfoPageProps> = ({ pageTitle, uploadedHo
       </main>
       
       <footer className="mt-12">
-        <Button to="/" className="!py-3 !px-8 !text-xl !font-semibold rounded-lg">
+        <Button to="/" className="!py-2 !px-6 !text-lg rounded-lg">
           Back to Home
         </Button>
       </footer>

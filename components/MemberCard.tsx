@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { MemberProficiencyInfo, CourseDetail, MemberProficiencyInSubject } from '../types';
 
@@ -31,7 +32,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
   return (
     <div className="bg-[var(--infoBoxBackground)] p-5 rounded-xl shadow-lg flex flex-col items-center text-center h-full">
       {/* Member Name */}
-      <h4 className="text-3xl font-semibold mb-3 text-[var(--text-accent-splash)] break-words">
+      <h4 className="text-2xl sm:text-3xl font-semibold mb-3 text-[var(--text-accent-splash)] break-words">
         {member.name}
       </h4>
       

@@ -390,28 +390,28 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
   return (
     <div className="min-h-screen p-3 md:p-4 flex flex-col bg-[var(--background-primary)]">
       <header className="text-center mb-6">
-        <div className="flex justify-center items-center space-x-4 mb-2">
-          <img src={creatureSrc} alt="NHS Mascot Creature" className="h-48 w-48 object-contain"/>
-          <h1 className="text-7xl font-bold text-[var(--text-primary)] tracking-wider leading-tight text-center">
+        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-2">
+          <img src={creatureSrc} alt="NHS Mascot Creature" className="h-24 w-24 sm:h-32 md:h-48 object-contain"/>
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[var(--text-primary)] tracking-wider leading-tight text-center">
             BHS' NHS<br />WEBSITE
           </h1>
-          <img src={giraffeSrc} alt="NHS Mascot Giraffe" className="h-48 w-48 object-contain"/>
+          <img src={giraffeSrc} alt="NHS Mascot Giraffe" className="h-24 w-24 sm:h-32 md:h-48 object-contain"/>
         </div>
         {isLoadingAssets && <p className="text-lg text-[var(--text-secondary)]">Loading assets...</p>}
         {assetError && <p className="text-lg text-[var(--text-error)]">Asset Error: {assetError}</p>}
-        {!isLoadingAssets && !assetError && <p className="text-3xl text-[var(--text-accent-splash)]">{splashText}</p>}
+        {!isLoadingAssets && !assetError && <p className="text-2xl sm:text-3xl text-[var(--text-accent-splash)]">{splashText}</p>}
       </header>
 
       <main className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Left Column */}
-        <div className="lg:col-span-1 flex flex-col space-y-10">
+        <div className="lg:col-span-1 flex flex-col space-y-6 md:space-y-10">
           <div>
-            <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-4 px-1 text-center lg:text-left">Upcoming Dates</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-4 px-1 text-center lg:text-left">Upcoming Dates</h2>
             <InfoBox className="bg-[var(--infoBoxBackground)] p-4 rounded-xl h-96">
               {upcomingEvents.length > 0 ? (
                 <ul className="space-y-2">
                   {upcomingEvents.map((item: DynamicListItem) => (
-                    <li key={item.id} className="text-xl text-[var(--text-primary)]">
+                    <li key={item.id} className="text-lg sm:text-xl text-[var(--text-primary)]">
                       <button 
                         onClick={() => openEventModal(item)}
                         className="text-left w-full hover:bg-opacity-20 hover:bg-gray-500 p-1 rounded transition-colors"
@@ -429,10 +429,10 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
           </div>
 
           <div>
-            <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-4 px-1 text-center lg:text-left">Links</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-4 px-1 text-center lg:text-left">Links</h2>
             <InfoBox className="bg-[var(--infoBoxBackground)] p-5 rounded-xl h-60">
               {links.length > 0 ? (
-                <ul className="space-y-2 text-xl text-[var(--text-primary)]">
+                <ul className="space-y-2 text-lg sm:text-xl text-[var(--text-primary)]">
                   {links.map((link: DynamicListItem) => (
                      <li key={link.id}>
                        <a href={link.url} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--text-link-hover)] underline text-[var(--text-link)]">
@@ -456,7 +456,7 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
                 key={link.id}
                 to={link.path}
                 iconSrc={buttonIconSources[link.id] || TRANSPARENT_PIXEL}
-                className="w-[36rem]" 
+                className="w-full max-w-md" 
               >
                 {link.label}
               </Button>
@@ -465,12 +465,12 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
         </div>
 
         {/* Right Column */}
-        <div className="lg:col-span-1 flex flex-col space-y-10">
+        <div className="lg:col-span-1 flex flex-col space-y-6 md:space-y-10">
           <div>
-            <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-4 px-1 text-center lg:text-left">Statistics</h2>
-            <InfoBox className="bg-[var(--infoBoxBackground)] p-4 rounded-xl h-[24rem]"> {/* Adjusted height */}
+            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-4 px-1 text-center lg:text-left">Statistics</h2>
+            <InfoBox className="bg-[var(--infoBoxBackground)] p-4 rounded-xl h-[24rem]">
               {uploadedHoursData && uploadedHoursData.members ? (
-                <ul className="space-y-1 text-base sm:text-lg md:text-xl"> {/* Adjusted space and text size for more items */}
+                <ul className="space-y-1 text-base sm:text-lg">
                   {statisticsItems.map(stat => (
                     <li key={stat.label} className="text-[var(--text-primary)] flex justify-between">
                       <span>{stat.label}</span>
@@ -487,20 +487,20 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
           </div>
 
           <div>
-            <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-4 px-1 text-center lg:text-left">Info & Updates</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-4 px-1 text-center lg:text-left">Info & Updates</h2>
             <InfoBox className="bg-[var(--infoBoxBackground)] p-5 rounded-xl h-60">
               {infoUpdates.length > 0 ? (
                 <div className="flex flex-col h-full">
                   <div className="flex-grow overflow-y-auto mb-2">
                     <div className="relative flex justify-center items-baseline mb-1">
-                      <p className="absolute left-0 text-xl text-[var(--text-accent-info)] whitespace-nowrap">
+                      <p className="absolute left-0 text-lg sm:text-xl text-[var(--text-accent-info)] whitespace-nowrap">
                         {infoUpdates[currentUpdateIndex]?.date}
                       </p>
-                      <h4 className="text-xl text-[var(--text-primary)] font-bold px-2">
+                      <h4 className="text-lg sm:text-xl text-[var(--text-primary)] font-bold px-2">
                         {infoUpdates[currentUpdateIndex]?.header}
                       </h4>
                     </div>
-                    <p className="text-lg text-[var(--text-secondary)] whitespace-pre-wrap break-words">{infoUpdates[currentUpdateIndex]?.content}</p>
+                    <p className="text-base sm:text-lg text-[var(--text-secondary)] whitespace-pre-wrap break-words">{infoUpdates[currentUpdateIndex]?.content}</p>
                   </div>
                   {infoUpdates.length > 1 && (
                     <div className="flex justify-between items-center mt-auto">
@@ -536,14 +536,14 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
         <div className="flex flex-col items-center sm:items-baseline sm:flex-row">
             <button 
               onClick={openChangelogModal}
-              className="text-2xl text-[var(--text-footer)] hover:underline focus:outline-none focus:ring-2 focus:ring-[var(--button-ring)] focus:ring-opacity-50 rounded px-1 py-0.5"
+              className="text-base sm:text-lg md:text-2xl text-[var(--text-footer)] hover:underline focus:outline-none focus:ring-2 focus:ring-[var(--button-ring)] focus:ring-opacity-50 rounded px-1 py-0.5"
               aria-label={`View website changelog. Website last updated: ${displayWebsiteLastUpdated}. Hours last updated: ${displayHoursLastUpdated}.`}
               disabled={!changelogUpdates || changelogUpdates.length === 0}
             >
               {`Last Updated: ${displayWebsiteLastUpdated} | Hours Updated: ${displayHoursLastUpdated}`}
             </button>
         </div>
-        <p className="text-2xl text-[var(--text-footer)] mt-2 sm:mt-0">
+        <p className="text-base sm:text-lg md:text-2xl text-[var(--text-footer)] mt-2 sm:mt-0">
           Website By Isaac Hilderbrand
         </p>
       </footer>
