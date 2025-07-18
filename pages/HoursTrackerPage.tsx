@@ -162,10 +162,21 @@ const HoursTrackerPage: React.FC<HoursTrackerPageProps> = ({ navigationPageTitle
     // 4. Draw header and tables
     doc.setFontSize(18);
     doc.setTextColor(40);
-    const title = `NHS Tutoring Hours Report: ${
+    const reportDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    const title = `NHS Tutoring Hours Report: ${reportDate}`;
+    doc.text(title, doc.internal.pageSize.getWidth() / 2, 12, { align: 'center' });
+
+    doc.setFontSize(12);
+    const subtitle = `Data for ${
       isBothMode ? 'All Semesters (by Total)' : `Semester ${pdfSemesterOption === 's1' ? '1' : '2'}`
     }`;
-    doc.text(title, doc.internal.pageSize.getWidth() / 2, 12, { align: 'center' });
+    doc.text(subtitle, doc.internal.pageSize.getWidth() / 2, 18, { align: 'center' });
+
+    const tableStartY = 24;
 
     const tableStyles = {
         halign: 'center', valign: 'middle', fontSize: 8, cellPadding: 1,
@@ -181,7 +192,7 @@ const HoursTrackerPage: React.FC<HoursTrackerPageProps> = ({ navigationPageTitle
       doc.autoTable({
         head: [['Member Name', 'S1 Hours', 'S2 Hours', 'Total Hours']],
         body: tableData,
-        startY: 18, styles: tableStyles, headStyles: headStyles,
+        startY: tableStartY, styles: tableStyles, headStyles: headStyles,
         columnStyles: {
             0: { cellWidth: '40%', halign: 'left' },
             1: { cellWidth: '20%', halign: 'center' },
@@ -228,7 +239,7 @@ const HoursTrackerPage: React.FC<HoursTrackerPageProps> = ({ navigationPageTitle
       const drawColoredTable = (body: any[], members: any[], startX: number, tableWidth: number) => {
         doc.autoTable({
           head: [['Member Name', `S${pdfSemesterOption === 's1' ? 1 : 2} Hours`]],
-          body: body, startY: 18, margin: { left: startX }, tableWidth: tableWidth,
+          body: body, startY: tableStartY, margin: { left: startX }, tableWidth: tableWidth,
           styles: tableStyles, headStyles: headStyles,
           columnStyles: {
             0: { cellWidth: '75%', halign: 'left' },
