@@ -385,6 +385,7 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
     { label: "Members with at least 10 Hours:", value: hourStatistics.membersWithAtLeast10Hours },
     { label: "Top Tutor (Most Hours):", value: hourStatistics.topTutorDisplay },
     { label: "Days Left for 5 Required Hours:", value: hourStatistics.daysLeftFor5RequiredHours },
+	{ label: "Days to Earn 5 Service Hours:", value: hourStatistics.daysLeftFor5RequiredHours },
   ];
 
   return (
