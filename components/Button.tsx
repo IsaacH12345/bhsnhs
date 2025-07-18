@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({ to, onClick, children, className, iconS
   const content = (
     <div className="flex items-center justify-center text-center">
       {iconSrc && iconSrc !== TRANSPARENT_PIXEL && (
-        <img src={iconSrc} alt="" className="h-8 w-8 sm:h-10 md:h-14 mr-3 md:mr-5 object-contain" />
+        <img src={iconSrc} alt="" className="h-10 w-10 sm:h-12 md:h-16 mr-3 md:mr-5 object-contain" />
       )}
       <span>{children}</span>
     </div>

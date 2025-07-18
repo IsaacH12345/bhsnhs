@@ -391,11 +391,11 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
     <div className="min-h-screen p-3 md:p-4 flex flex-col bg-[var(--background-primary)]">
       <header className="text-center mb-6">
         <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-2">
-          <img src={creatureSrc} alt="NHS Mascot Creature" className="h-24 w-24 sm:h-32 md:h-48 object-contain"/>
+          <img src={creatureSrc} alt="NHS Mascot Creature" className="h-32 w-32 sm:h-40 md:h-56 object-contain"/>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[var(--text-primary)] tracking-wider leading-tight text-center">
             BHS' NHS<br />WEBSITE
           </h1>
-          <img src={giraffeSrc} alt="NHS Mascot Giraffe" className="h-24 w-24 sm:h-32 md:h-48 object-contain"/>
+          <img src={giraffeSrc} alt="NHS Mascot Giraffe" className="h-32 w-32 sm:h-40 md:h-56 object-contain"/>
         </div>
         {isLoadingAssets && <p className="text-lg text-[var(--text-secondary)]">Loading assets...</p>}
         {assetError && <p className="text-lg text-[var(--text-error)]">Asset Error: {assetError}</p>}
@@ -456,7 +456,7 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
                 key={link.id}
                 to={link.path}
                 iconSrc={buttonIconSources[link.id] || TRANSPARENT_PIXEL}
-                className="w-full max-w-md" 
+                className="w-full max-w-lg" 
               >
                 {link.label}
               </Button>
