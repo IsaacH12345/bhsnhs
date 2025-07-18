@@ -456,7 +456,7 @@ const HomePage: React.FC<HomePageProps> = ({ uploadedHoursData }) => {
                 key={link.id}
                 to={link.path}
                 iconSrc={buttonIconSources[link.id] || TRANSPARENT_PIXEL}
-                className="w-full max-w-lg" 
+                className="w-full max-w-xl" 
               >
                 {link.label}
               </Button>

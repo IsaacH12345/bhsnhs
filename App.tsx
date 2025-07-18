@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import OfficerDetailsPage from './pages/OfficerDetailsPage';
 import HoursTrackerPage from './pages/HoursTrackerPage';
@@ -116,12 +116,12 @@ const App: React.FC = () => {
 
   return (
       <div className="min-h-screen bg-[var(--background-secondary)] text-[var(--text-primary)] font-mono">
-        <Routes>
-          <Route path="/" element={<HomePage uploadedHoursData={uploadedHoursData} />} />
+        <ReactRouterDOM.Routes>
+          <ReactRouterDOM.Route path="/" element={<HomePage uploadedHoursData={uploadedHoursData} />} />
           {NAVIGATION_LINKS.slice(1).map(link => {
             if (link.id === "hours") {
               return (
-                <Route
+                <ReactRouterDOM.Route
                   key={link.id}
                   path={link.path}
                   element={<HoursTrackerPage
@@ -135,7 +135,7 @@ const App: React.FC = () => {
             }
             if (link.id === "meeting-info") { // Route for Meeting Information
               return (
-                <Route
+                <ReactRouterDOM.Route
                   key={link.id}
                   path={link.path}
                   element={<MeetingInfoPage
@@ -149,7 +149,7 @@ const App: React.FC = () => {
             }
             if (link.id === "officer-details") {
               return (
-                <Route
+                <ReactRouterDOM.Route
                   key={link.id}
                   path={link.path}
                   element={<OfficerDetailsPage
@@ -163,7 +163,7 @@ const App: React.FC = () => {
             }
             if (link.id === "member-details") {
               return (
-                <Route
+                <ReactRouterDOM.Route
                   key={link.id}
                   path={link.path}
                   element={<MemberDetailsPage
@@ -177,7 +177,7 @@ const App: React.FC = () => {
             }
             if (link.id === "suggestions") {
               return (
-                <Route
+                <ReactRouterDOM.Route
                   key={link.id}
                   path={link.path}
                   element={<SuggestionsPage
@@ -191,7 +191,7 @@ const App: React.FC = () => {
             }
             if (link.id === "study-resources") {
               return (
-                <Route
+                <ReactRouterDOM.Route
                   key={link.id}
                   path={link.path}
                   element={<StudyResourcesPage
@@ -210,16 +210,16 @@ const App: React.FC = () => {
             console.warn(`No specific page component defined for navigation link: ${link.label} (${link.path})`);
             return null;
           })}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+          <ReactRouterDOM.Route path="*" element={<ReactRouterDOM.Navigate to="/" replace />} />
+        </ReactRouterDOM.Routes>
       </div>
   );
 };
 
 const AppWrapper: React.FC = () => (
-  <HashRouter>
+  <ReactRouterDOM.HashRouter>
     <App />
-  </HashRouter>
+  </ReactRouterDOM.HashRouter>
 );
 
 export default AppWrapper;

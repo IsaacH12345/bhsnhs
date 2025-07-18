@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 
 interface ButtonProps {
   to?: string;
@@ -11,10 +10,8 @@ interface ButtonProps {
   disabled?: boolean; // Added disabled prop
 }
 
-const TRANSPARENT_PIXEL = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-
 const Button: React.FC<ButtonProps> = ({ to, onClick, children, className, iconSrc, disabled }) => {
-  const baseClasses = "inline-flex items-center justify-center text-center bg-[var(--button-primary-background)] hover:bg-[var(--button-primary-background-hover)] text-[var(--buttonText)] font-semibold rounded-2xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--button-ring)] focus:ring-opacity-50 py-3 px-6 text-2xl sm:py-4 sm:px-8 sm:text-3xl md:py-7 md:px-11 md:text-4xl";
+  const baseClasses = "inline-flex items-center justify-center text-center bg-[var(--button-primary-background)] hover:bg-[var(--button-primary-background-hover)] text-[var(--buttonText)] font-semibold rounded-2xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--button-ring)] focus:ring-opacity-50 py-4 px-6 text-3xl sm:py-5 sm:px-8 sm:text-4xl md:py-6 md:px-11 md:text-4xl";
   
   // Specific classes for disabled state to override hover effects and add opacity/cursor
   const disabledStateClasses = "opacity-50 cursor-not-allowed hover:bg-[var(--button-primary-background)]";
@@ -23,8 +20,8 @@ const Button: React.FC<ButtonProps> = ({ to, onClick, children, className, iconS
 
   const content = (
     <div className="flex items-center justify-center text-center">
-      {iconSrc && iconSrc !== TRANSPARENT_PIXEL && (
-        <img src={iconSrc} alt="" className="h-10 w-10 sm:h-12 md:h-16 mr-3 md:mr-5 object-contain" />
+      {iconSrc && (
+        <img src={iconSrc} alt="" className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 mr-5 sm:mr-6 md:mr-8 object-contain" />
       )}
       <span>{children}</span>
     </div>
@@ -41,9 +38,9 @@ const Button: React.FC<ButtonProps> = ({ to, onClick, children, className, iconS
     }
     // Render as a Link if 'to' prop is provided and not disabled
     return (
-      <Link to={to} className={`${baseClasses} ${className}`}>
+      <ReactRouterDOM.Link to={to} className={`${baseClasses} ${className}`}>
         {content}
-      </Link>
+      </ReactRouterDOM.Link>
     );
   }
 
